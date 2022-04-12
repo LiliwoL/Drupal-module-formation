@@ -21,10 +21,26 @@ class RouteController extends ControllerBase
 
     // Renvoi d'un render_array
     // https://www.drupal.org/docs/drupal-apis/render-api/render-arrays
-    return [
+    // Rendu d'un HTML brut
+//    return [
+//      '#markup' => "Paramètres reçus " . $from . " et " . $to
+//    ];
+
+    // Affichage du résultat à partir d'un template spécifique à ce module
+    /*return [
+      // Theme qui sera utilisé pour "rendre" cette route
       '#theme' => 'cle_du_theme',
+
+      // Variables envoyées au theme
       '#from' => $from,
       '#to' => $to,
+    ];*/
+
+    // Utilisation d'un theme existant
+    return [
+      '#theme' => 'image',
+      '#uri' => 'https://www.drupal.fr/sites/default/files/drupal-2020.png',
+      '#alt' => t('Logo Drupal')
     ];
   }
 }

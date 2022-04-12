@@ -1,0 +1,10 @@
+# Ajout d'un lien dans le menu main
+formation.module_route:
+  title: 'Module route'
+  description: 'Ajout de lien dans le menu'
+  menu_name: main
+
+  route_name: formation.module_route_intro
+  # Poids de -50 à 50
+  # Les pids les plus légers seront en début de liste
+  weight: 1
