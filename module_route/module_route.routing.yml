@@ -1,0 +1,13 @@
+# Nom de la route
+formation_module_route_intro:
+  # URL ou Path
+  path: /formation/module/route/intro
+  # Config
+  defaults:
+    # Controller et l'action
+    _controller: namespace\du\controller::action
+
+  # Droits d'accès
+  requirements:
+    # Permissions
+    _permission: 'access content'
