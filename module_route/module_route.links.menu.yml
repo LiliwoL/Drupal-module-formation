@@ -5,4 +5,6 @@ formation.module_route:
   menu_name: main
 
   route_name: formation.module_route_intro
-  weight: 100
+  # Poids de -50 à 50
+  # Les pids les plus légers seront en début de liste
+  weight: 1
