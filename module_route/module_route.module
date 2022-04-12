@@ -2,8 +2,10 @@
 /**
  * Implements hook_theme().
  */
-function module_route_theme() {
+function module_route_theme()
+{
   return array(
+      // Ajoute la clé du theme à la liste de toutes les autres disonible sur le site
       'cle_du_theme' => array(
         'variables' => ['from' => NULL, 'to' => NULL],
         'template' => 'theme-page'

@@ -26,6 +26,7 @@ class RouteController extends ControllerBase
 //      '#markup' => "Paramètres reçus " . $from . " et " . $to
 //    ];
 
+    // Affichage du résultat à partir d'un template spécifique à ce module
     return [
       // Theme qui sera utilisé pour "rendre" cette route
       '#theme' => 'cle_du_theme',

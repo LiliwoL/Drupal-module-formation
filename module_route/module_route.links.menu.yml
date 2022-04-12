@@ -1,0 +1,7 @@
+formation.module_route:
+  title: 'Module route'
+  description: 'Ajout de lien dans le menu'
+  menu_name: main
+
+  route_name: formation.module_route_intro
+  weight: 100
