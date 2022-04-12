@@ -17,6 +17,11 @@ class RouteController extends ControllerBase
   public function route_avec_parametre( $from, $to)
   {
     // Dans un premier temps renvoi d'une réponse
-    return new Response("Paramètres reçus " . $from . " et " . $to);
+    //return new Response("Paramètres reçus " . $from . " et " . $to);
+
+    // Renvoi d'un render_array
+    return [
+      '#markup' => "Paramètres reçus " . $from . " et " . $to
+    ];
   }
 }
