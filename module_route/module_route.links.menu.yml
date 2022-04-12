@@ -1,3 +1,4 @@
+# Ajout d'un lien dans le menu main
 formation.module_route:
   title: 'Module route'
   description: 'Ajout de lien dans le menu'
