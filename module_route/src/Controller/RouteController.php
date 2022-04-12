@@ -21,8 +21,16 @@ class RouteController extends ControllerBase
 
     // Renvoi d'un render_array
     // https://www.drupal.org/docs/drupal-apis/render-api/render-arrays
+    // Rendu d'un HTML brut
+//    return [
+//      '#markup' => "Paramètres reçus " . $from . " et " . $to
+//    ];
+
     return [
+      // Theme qui sera utilisé pour "rendre" cette route
       '#theme' => 'cle_du_theme',
+
+      // Variables envoyées au theme
       '#from' => $from,
       '#to' => $to,
     ];
