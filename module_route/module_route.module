@@ -3,11 +3,10 @@
  * Implements hook_theme().
  */
 function module_route_theme() {
-  $theme['cle_du_theme'] =
-    [
-      'variables' => ['from' => NULL, 'to' => NULL],
-      'template' => 'theme-page',
-    ];
-
-  return $theme;
+  return array(
+      'cle_du_theme' => array(
+        'variables' => ['from' => NULL, 'to' => NULL],
+        'template' => 'theme-page'
+      )
+  );
 }
