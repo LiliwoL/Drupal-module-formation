@@ -27,13 +27,20 @@ class RouteController extends ControllerBase
 //    ];
 
     // Affichage du résultat à partir d'un template spécifique à ce module
-    return [
+    /*return [
       // Theme qui sera utilisé pour "rendre" cette route
       '#theme' => 'cle_du_theme',
 
       // Variables envoyées au theme
       '#from' => $from,
       '#to' => $to,
+    ];*/
+
+    // Utilisation d'un theme existant
+    return [
+      '#theme' => 'image',
+      '#uri' => 'https://www.drupal.fr/sites/default/files/drupal-2020.png',
+      '#alt' => t('Logo Drupal')
     ];
   }
 }
