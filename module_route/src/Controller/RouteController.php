@@ -20,8 +20,11 @@ class RouteController extends ControllerBase
     //return new Response("Paramètres reçus " . $from . " et " . $to);
 
     // Renvoi d'un render_array
+    // https://www.drupal.org/docs/drupal-apis/render-api/render-arrays
     return [
-      '#markup' => "Paramètres reçus " . $from . " et " . $to
+      '#theme' => 'cle_du_theme',
+      '#from' => $from,
+      '#to' => $to,
     ];
   }
 }
