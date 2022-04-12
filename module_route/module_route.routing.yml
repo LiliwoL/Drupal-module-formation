@@ -5,7 +5,8 @@ formation_module_route_intro:
   # Config
   defaults:
     # Controller et l'action
-    _controller: namespace\du\controller::action
+    #_controller: namespace\du\controller::action
+    _controller: Drupal\module_route\Controller::introduction
 
   # Droits d'accès
   requirements:

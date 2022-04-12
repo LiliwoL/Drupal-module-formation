@@ -1,5 +1,7 @@
 <?php
 
+namespace Drupal\module_route\Controller;
+
 use \Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Response;
 
