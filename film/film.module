@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains film.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function film_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the film module.
+    case 'help.page.film':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Module créant des films') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function film_theme() {
+  return [
+    'film' => [
+      'render element' => 'children',
+    ],
+  ];
+}
