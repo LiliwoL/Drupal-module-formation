@@ -1,5 +1,5 @@
 # Nom de la route
-formation_module_route_intro:
+formation.module_route_intro:
   # URL ou Path
   path: /formation/module/route/intro
   # Config
@@ -7,6 +7,28 @@ formation_module_route_intro:
     # Controller et l'action
     #_controller: namespace\du\controller::action
     _controller: Drupal\module_route\Controller\RouteController::introduction
+
+  # Droits d'accès
+  requirements:
+    # Permissions
+    _permission: 'access content'
+
+# ####################
+
+# Nom de la route
+formation.module_route_parametre:
+  # URL ou Path
+  # Avc les paramètres encadrés par des accolades
+  path: /formation/module/route/parametre/{from}/{to}
+
+  # Config
+  defaults:
+    # Controller et l'action
+    #_controller: namespace\du\controller::action
+    _controller: Drupal\module_route\Controller\RouteController::route_avec_parametre
+
+    # Titre de la page
+    _title: 'Route avec paramètre'
 
   # Droits d'accès
   requirements:

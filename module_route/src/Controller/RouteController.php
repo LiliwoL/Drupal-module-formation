@@ -12,4 +12,11 @@ class RouteController extends ControllerBase
   {
     return new Response("Message envoyé depuis le module_route");
   }
+
+  // Action avec un paramètre, mais qui renvoie un render_array
+  public function route_avec_parametre( $from, $to)
+  {
+    // Dans un premier temps renvoi d'une réponse
+    return new Response("Paramètres reçus " . $from . " et " . $to);
+  }
 }
