@@ -34,3 +34,7 @@ formation.module_route_parametre:
   requirements:
     # Permissions
     _permission: 'access content'
+    # Valider les paramètres donnés
+    from: '[a-zA-Z]+'
+    to: '[0-9]+'
+
