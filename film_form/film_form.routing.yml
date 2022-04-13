@@ -7,3 +7,11 @@ film_form.film_form:
   requirements:
     _access: 'TRUE'
 
+
+film_form.film_controller_purge:
+  path: '/films/purge'
+  defaults:
+    _controller: '\Drupal\film_form\Controller\FilmController::purge'
+    _title: 'Purge des films'
+  requirements:
+    _permission: 'access content'

@@ -3,3 +3,7 @@ film_form.film_form:
   url: internal:/film/rechercher
   menu_name: main
 
+film_form.film_purge:
+  title: 'Purges des film'
+  url: internal:/films/purge
+  menu_name: main

@@ -83,21 +83,54 @@ class FilmForm extends FormBase {
     foreach ($data['Search'] as $movie)
     {
       //dd($movie);
-      // On pourrait ajouter en base?
-      $node = Node::create([
-        'type'        => 'film',
-        'title'       => $movie['Title'],
-        'field_affiche' => $movie['Poster'],
-        // On avait choisi un champ de type date, on doit renvoyer Y-m-d
-        'field_annee_de_sortie' => $movie['Year'] . '-01-01'
-        // 'body' => $movie['Plot']
-      ]);
+      // On pourrait vérifier avant d' ajouter en base?
+      $query = \Drupal::entityQuery('node');
+      $query->condition('type', 'film');
+      // Condtions AND
+      $query->condition('title', $movie['Title'] );
+      $query->condition('field_affiche', $movie['Poster'] );
+      $query->condition('field_annee_de_sortie', $movie['Year'] . '-01-01');
+      // On ne veut qu'un seul résultat
+      $query->range(0, 1);
+      // Exécution
+      $films_similaires = $query->execute();
+
+      if ( sizeof($films_similaires) != 0 )
+      {
+        //dd($films_similaires);
+        // Update
+        $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+        // On est sûr qu'il n'y a qu'une seule case
+        $node = $node_storage->load( reset($films_similaires) );
+
+        $node->title = $movie['Title'];
+        $node->field_affiche = $movie['Poster'];
+        $node->field_annee_de_sortie = $movie['Year'] . '-01-01';
+
+      } else {
+        // Ajout
+        $node = Node::create([
+          'type'        => 'film',
+          'title'       => $movie['Title'],
+          'field_affiche' => $movie['Poster'],
+          // On avait choisi un champ de type date, on doit renvoyer Y-m-d
+          'field_annee_de_sortie' => $movie['Year'] . '-01-01'
+          // 'body' => $movie['Plot']
+        ]);
+
+        $node->save();// Ajout
+        $node = Node::create([
+          'type'        => 'film',
+          'title'       => $movie['Title'],
+          'field_affiche' => $movie['Poster'],
+          // On avait choisi un champ de type date, on doit renvoyer Y-m-d
+          'field_annee_de_sortie' => $movie['Year'] . '-01-01'
+          // 'body' => $movie['Plot']
+        ]);
+      }
 
       $node->save();
     }
-    //dd($data);
-
-
   }
 
 }
