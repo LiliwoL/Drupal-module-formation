@@ -1,5 +1,5 @@
 film_form.film_form:
-  title: 'Recherche de filmm'
-  url: internal:/film_form
+  title: 'Recherche de film'
+  url: internal:/film/rechercher
   menu_name: main
 
