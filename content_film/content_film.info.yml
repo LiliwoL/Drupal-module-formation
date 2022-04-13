@@ -1,0 +1,7 @@
+name: content_film
+type: module
+description: 'Export du type de contenu Film'
+core_version_requirement: '^8 || ^9'
+package: Formation
+dependencies:
+  - menu_ui

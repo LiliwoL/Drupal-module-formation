@@ -1,7 +1,0 @@
-name: film
-type: module
-description: 'Module créant des films'
-core: 8.x
-package: Formation
-dependencies:
-  - menu_ui

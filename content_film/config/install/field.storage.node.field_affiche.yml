@@ -2,25 +2,14 @@ langcode: fr
 status: true
 dependencies:
   module:
-    - file
-    - image
+    - link
     - node
 id: node.field_affiche
 field_name: field_affiche
 entity_type: node
-type: image
-settings:
-  target_type: file
-  display_field: false
-  display_default: false
-  uri_scheme: public
-  default_image:
-    uuid: ''
-    alt: ''
-    title: ''
-    width: null
-    height: null
-module: image
+type: link
+settings: {  }
+module: link
 locked: false
 cardinality: 1
 translatable: true

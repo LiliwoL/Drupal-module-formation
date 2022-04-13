@@ -1,0 +1,20 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_annee_de_sortie
+    - node.type.film
+  module:
+    - datetime
+id: node.film.field_annee_de_sortie
+field_name: field_annee_de_sortie
+entity_type: node
+bundle: film
+label: 'Année de sortie'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime
