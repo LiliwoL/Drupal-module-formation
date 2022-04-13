@@ -88,7 +88,8 @@ class FilmForm extends FormBase {
         'type'        => 'film',
         'title'       => $movie['Title'],
         'field_affiche' => $movie['Poster'],
-        'field_annee_de_sortie' => $movie['Year']
+        // On avait choisi un champ de type date, on doit renvoyer Y-m-d
+        'field_annee_de_sortie' => $movie['Year'] . '-01-01'
         // 'body' => $movie['Plot']
       ]);
 
