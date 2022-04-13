@@ -1,9 +1,0 @@
-langcode: fr
-status: true
-dependencies:
-  module:
-    - node
-id: node.teaser
-label: Accroche
-targetEntityType: node
-cache: true
