@@ -1,0 +1,9 @@
+
+film_form.film_form:
+  path: '/film/rechercher'
+  defaults:
+    _form: '\Drupal\film_form\Form\FilmForm'
+    _title: 'Recherche de film'
+  requirements:
+    _access: 'TRUE'
+
