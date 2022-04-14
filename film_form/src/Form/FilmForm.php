@@ -5,6 +5,7 @@ namespace Drupal\film_form\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Class FilmForm.
@@ -142,16 +143,17 @@ class FilmForm extends FormBase {
 
           // ************
           // Taxonomie des Genres
-          $genresFromOmdb = explode(",", $moreData['Genre']);
+          $genresFromOmdb = explode(",", $moreData['Genre']); // Explose la string en tableau en séparant par les virgules
           $genresDuFilm = [];
 
           // Création des termes s'ils n'existent pas
           if ( sizeof($genresFromOmdb) != 0 ){
+            // PArcours de tous les genres envoyés par Omdb
             foreach ( $genresFromOmdb as $genreEnCours )
             {
               if ($genreEnCours != "")
               {
-                // Nettoyage du genre
+                // Nettoyage du genre en retirant les espaces au début et à la fin
                 $genreEnCours = trim($genreEnCours);
 
                 //dump($genreEnCours);
@@ -160,14 +162,19 @@ class FilmForm extends FormBase {
 
                 if ( $genreExiste == NULL )
                 {
-                  \Drupal\taxonomy\Entity\Term::create(
+                  // Création du terme
+                  Term::create(
                     [
                       'name' => $genreEnCours,
-                      'vid' => 'genres'
+                      'vid' => 'genres' // Nom machine du vocabulaire de taxonomie
                     ]
                   )->save();
+
                 } else {
+
+                  // S'il existe, on l'ajoute au tableau de genres à ajouter au film en cours
                   $genresDuFilm[] = reset($genreExiste);
+
                 }
               }
             }
