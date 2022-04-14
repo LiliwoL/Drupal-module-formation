@@ -65,7 +65,7 @@ class FilmForm extends FormBase {
     // Construction avec les données du formualaire
     $urlBySearch = $endPoint . "&s=" . $titre;
 
-    // Requête API
+    // Requête API Numéro 1
     $result = \Drupal::httpClient()->get(
       $urlBySearch,
       [
@@ -86,8 +86,6 @@ class FilmForm extends FormBase {
     // Parcours des résultats reçus
     foreach ($data['Search'] as $movie)
     {
-      //dd($movie);
-
 
       // On vérifier avant d'ajouter en base que le film n'existe pas déjà
       $query = \Drupal::entityQuery('node');
@@ -123,6 +121,7 @@ class FilmForm extends FormBase {
 
       } else { // Sinon, on l'ajoute
 
+        // ****************
         // Deuxième requête API pour récupérer plus d'informations
         $urlByTitle = $endPoint . "&t=" . urlencode($movie['Title']);
 
@@ -134,10 +133,14 @@ class FilmForm extends FormBase {
             ],
           ]
         );
+
         // Si le résultat de la deuxième requête est au statut 200
         if ($moreResults->getStatusCode() == 200) {
+
+          // Analyse de ce que ce deuxième appel API a renvoyé
           $moreData = json_decode($moreResults->getBody(), true);
 
+          // ************
           // Taxonomie des Genres
           $genresFromOmdb = explode(",", $moreData['Genre']);
           $genresDuFilm = [];
@@ -169,6 +172,7 @@ class FilmForm extends FormBase {
               }
             }
           }
+          // *************
         }
 
         // Ajout
@@ -182,14 +186,19 @@ class FilmForm extends FormBase {
           // On avait choisi un champ de type date, on doit renvoyer Y-m-d
           'field_annee_de_sortie' => $movie['Year'] . '-01-01',
 
-          // Si Plot existe
+          // Si Plot existe, il a été fourni dans le deuxième appel API
           'body' => ( isset($moreData['Plot']) ) ? $moreData['Plot'] : "",
 
           // Genres
           'field_genre' => $genresDuFilm,
 
-          // Type à créer
-          'field_boxoffice' => $moreData['BoxOffice']
+          // BoxOffice
+          // On aura retirer les virgules et le symbole $
+          'field_boxoffice' => str_replace('$', '', str_replace(",", "", $moreData['BoxOffice'])),
+
+          // Imdb rating et vote
+          'field_imdbvotes' => str_replace(",", "", $moreData['imdbVotes']),
+          'field_imdbrating' => $moreData['imdbRating']
         ]);
 
         $node->save();
