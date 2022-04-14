@@ -1,0 +1,7 @@
+langcode: fr
+status: true
+dependencies: {  }
+name: Genres
+vid: genres
+description: ''
+weight: 0

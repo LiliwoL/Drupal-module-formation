@@ -60,13 +60,14 @@ class FilmForm extends FormBase {
     $apiKey = $config->get('omdbapikey');
 
     // Les API ont un point d'entrée, une URL de départ
-    $endPoint = "http://www.omdbapi.com/?apikey=" . $apiKey . "&s=";
+    $endPoint = "http://www.omdbapi.com/?apikey=" . $apiKey;
 
     // Construction avec les données du formualaire
-    $url = $endPoint . $titre;
+    $urlBySearch = $endPoint . "&s=" . $titre;
 
+    // Requête API
     $result = \Drupal::httpClient()->get(
-      $url,
+      $urlBySearch,
       [
         'headers' => [
           'Accept' => 'application/json',
@@ -74,27 +75,33 @@ class FilmForm extends FormBase {
       ]
     );
 
+    // Si le résultat de la requête est au statut 200
     if ($result->getStatusCode() == 200) {
       $data = json_decode($result->getBody(), true);
     }
     else {
       return $this->HandleFailed("Check Access token");
     }
+
+    // Parcours des résultats reçus
     foreach ($data['Search'] as $movie)
     {
       //dd($movie);
-      // On pourrait vérifier avant d'ajouter en base?
-      $query = \Drupal::entityQuery('node');
-      $query->condition('type', 'film');
-      // Condtions AND
-      $query->condition('title', $movie['Title'] );
-      $query->condition('field_affiche', $movie['Poster'] );
-      $query->condition('field_annee_de_sortie', $movie['Year'] . '-01-01');
-      // On ne veut qu'un seul résultat
-      $query->range(0, 1);
-      // Exécution
-      $films_similaires = $query->execute();
 
+
+      // On vérifier avant d'ajouter en base que le film n'existe pas déjà
+      $query = \Drupal::entityQuery('node');
+        $query->condition('type', 'film');
+        // Condtions AND
+        $query->condition('title', $movie['Title'] );
+        $query->condition('field_affiche', $movie['Poster'] );
+        $query->condition('field_annee_de_sortie', $movie['Year'] . '-01-01');
+        // On ne veut qu'un seul résultat
+        $query->range(0, 1);
+        // Exécution
+        $films_similaires = $query->execute();
+
+      // Si le film existe déjà
       if ( sizeof($films_similaires) != 0 )
       {
         //dd($films_similaires);
@@ -114,15 +121,75 @@ class FilmForm extends FormBase {
         // Warning
         \Drupal::messenger()->addWarning("Le film " . $movie['Title'] . " existe déjà en base.");
 
-      } else {
+      } else { // Sinon, on l'ajoute
+
+        // Deuxième requête API pour récupérer plus d'informations
+        $urlByTitle = $endPoint . "&t=" . urlencode($movie['Title']);
+
+        $moreResults = \Drupal::httpClient()->get(
+          $urlByTitle,
+          [
+            'headers' => [
+              'Accept' => 'application/json',
+            ],
+          ]
+        );
+        // Si le résultat de la deuxième requête est au statut 200
+        if ($moreResults->getStatusCode() == 200) {
+          $moreData = json_decode($moreResults->getBody(), true);
+
+          // Taxonomie des Genres
+          $genresFromOmdb = explode(",", $moreData['Genre']);
+          $genresDuFilm = [];
+
+          // Création des termes s'ils n'existent pas
+          if ( sizeof($genresFromOmdb) != 0 ){
+            foreach ( $genresFromOmdb as $genreEnCours )
+            {
+              if ($genreEnCours != "")
+              {
+                // Nettoyage du genre
+                $genreEnCours = trim($genreEnCours);
+
+                //dump($genreEnCours);
+                // Le terme existe?
+                $genreExiste = taxonomy_term_load_multiple_by_name($genreEnCours);
+
+                if ( $genreExiste == NULL )
+                {
+                  \Drupal\taxonomy\Entity\Term::create(
+                    [
+                      'name' => $genreEnCours,
+                      'vid' => 'genres'
+                    ]
+                  )->save();
+                } else {
+                  $genresDuFilm[] = reset($genreExiste);
+                }
+              }
+            }
+          }
+        }
+
         // Ajout
         $node = Node::create([
           'type'        => 'film',
           'title'       => $movie['Title'],
-          'field_affiche' => $movie['Poster'],
+
+          // Gestion si l'affiche est à N/A, on met une affiche lambda
+          'field_affiche' => ($movie['Poster'] == "N/A") ? "https://dummyimage.com/150x200/000/fff" : $movie['Poster'],
+
           // On avait choisi un champ de type date, on doit renvoyer Y-m-d
-          'field_annee_de_sortie' => $movie['Year'] . '-01-01'
-          // 'body' => $movie['Plot']
+          'field_annee_de_sortie' => $movie['Year'] . '-01-01',
+
+          // Si Plot existe
+          'body' => ( isset($moreData['Plot']) ) ? $moreData['Plot'] : "",
+
+          // Genres
+          'field_genre' => $genresDuFilm,
+
+          // Type à créer
+          'field_boxoffice' => $moreData['BoxOffice']
         ]);
 
         $node->save();
