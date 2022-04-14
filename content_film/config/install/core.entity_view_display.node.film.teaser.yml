@@ -6,6 +6,10 @@ dependencies:
     - field.field.node.film.body
     - field.field.node.film.field_affiche
     - field.field.node.film.field_annee_de_sortie
+    - field.field.node.film.field_boxoffice
+    - field.field.node.film.field_genre
+    - field.field.node.film.field_imdbrating
+    - field.field.node.film.field_imdbvotes
     - node.type.film
   module:
     - text
@@ -31,4 +35,8 @@ content:
 hidden:
   field_affiche: true
   field_annee_de_sortie: true
+  field_boxoffice: true
+  field_genre: true
+  field_imdbrating: true
+  field_imdbvotes: true
   langcode: true

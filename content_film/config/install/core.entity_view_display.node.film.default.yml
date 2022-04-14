@@ -5,6 +5,10 @@ dependencies:
     - field.field.node.film.body
     - field.field.node.film.field_affiche
     - field.field.node.film.field_annee_de_sortie
+    - field.field.node.film.field_boxoffice
+    - field.field.node.film.field_genre
+    - field.field.node.film.field_imdbrating
+    - field.field.node.film.field_imdbvotes
     - node.type.film
   module:
     - datetime
@@ -43,6 +47,45 @@ content:
       format_type: medium
     third_party_settings: {  }
     weight: 103
+    region: content
+  field_boxoffice:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_genre:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_imdbrating:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_imdbvotes:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 107
     region: content
   links:
     settings: {  }

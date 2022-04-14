@@ -1,0 +1,22 @@
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_imdbvotes
+    - node.type.film
+id: node.film.field_imdbvotes
+field_name: field_imdbvotes
+entity_type: node
+bundle: film
+label: imdbVotes
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

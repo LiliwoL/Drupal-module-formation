@@ -2,14 +2,15 @@ langcode: fr
 status: true
 dependencies:
   module:
-    - link
     - node
-id: node.field_affiche
-field_name: field_affiche
+id: node.field_imdbrating
+field_name: field_imdbrating
 entity_type: node
-type: link
-settings: {  }
-module: link
+type: decimal
+settings:
+  precision: 10
+  scale: 1
+module: core
 locked: false
 cardinality: 1
 translatable: true
