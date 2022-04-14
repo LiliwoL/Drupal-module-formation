@@ -55,8 +55,12 @@ class FilmForm extends FormBase {
     $data = $form_state->getValues();
     $titre = $data['titre'];
 
+    // Récupération de la clé API dans la configuration du module
+    $config = \Drupal::config('film_form.settings');
+    $apiKey = $config->get('omdbapikey');
+
     // Les API ont un point d'entrée, une URL de départ
-    $endPoint = "http://www.omdbapi.com/?apikey=185a318e&s=";
+    $endPoint = "http://www.omdbapi.com/?apikey=" . $apiKey . "&s=";
 
     // Construction avec les données du formualaire
     $url = $endPoint . $titre;
