@@ -1,5 +1,7 @@
-name: 'Formulaire de recherche ds films via OMDB.api'
+name: 'Formulaire de recherche des films via OMDB.api'
 type: module
 description: 'Module de recherche de film'
 package: 'Formation'
 core_version_requirement: '^8 || ^9'
+dependencies:
+  - content_film

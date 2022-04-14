@@ -1,0 +1,4 @@
+film_form.admin.config:
+  route_name: film_form.settings:
+  title: Settings
+  base_route: film_form.settings:

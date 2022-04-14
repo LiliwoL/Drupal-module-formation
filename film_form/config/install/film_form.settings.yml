@@ -1,0 +1,7 @@
+film_form.settings:
+  type: config_object
+  label: 'Clé OMDBAPI'
+  mapping:
+    message:
+      type: text
+      label: 'Clé API'
