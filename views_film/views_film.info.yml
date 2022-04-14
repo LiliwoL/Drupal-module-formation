@@ -1,0 +1,11 @@
+name: views_film
+type: module
+description: 'Module contenant les vues applicables au type de contenu film'
+core_version_requirement: '^8 || ^9'
+package: Formation
+dependencies:
+  - content_film
+  - datetime
+  - link
+  - node
+  - user

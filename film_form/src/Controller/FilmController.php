@@ -2,6 +2,7 @@
 
 namespace Drupal\film_form\Controller;
 
+use Drupal;
 use Drupal\Core\Controller\ControllerBase;
 
 /**
@@ -21,28 +22,22 @@ class FilmController extends ControllerBase {
     //https://api.drupal.org/api/drupal/core!lib!Drupal.php/class/Drupal/9.3.x
 
     // Recherche de TOUS les films
-    $listeFilms = \Drupal::entityQuery("node")
+    $listeFilms = Drupal::entityQuery("node")
       ->condition("type", "film")
       ->execute();
 
     // Stockage des noeuds
-    $storageHandler = \Drupal::entityTypeManager()
-      ->getStorage("node");
+    $storage_handler = Drupal::entityTypeManager()->getStorage("node");
 
-    // Chargement des films
-    $entities = $storageHandler->loadMultiple( $listeFilms );
-
-    $storageHandler->delete( $entities );
-
-    /*// En plus rapide
-    $storage_handler = \Drupal::entityTypeManager()->getStorage("node");
+    // Uniquement les noeuds de type film
     $entities = $storage_handler->loadByProperties(["type" => "film"]);
-    $storage_handler->delete($entities);*/
 
-    return [
-      '#type' => 'markup',
-      '#markup' => $this->t('Tous les films ont été supprimés')
-    ];
+    // Suppression
+    $storage_handler->delete($entities);
+
+    Drupal::messenger()->addMessage("Tous les films ont été supprimés");
+
+    // Redirection sur la homepage
+    return $this->redirect('view.frontpage.page_1');
   }
-
 }

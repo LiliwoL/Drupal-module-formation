@@ -50,10 +50,6 @@ class FilmForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Display result.
-    foreach ($form_state->getValues() as $key => $value) {
-      \Drupal::messenger()->addMessage($key . ': ' . $value);
-    }
 
     // Récupération du titre envoyé par le formulaire
     $data = $form_state->getValues();
@@ -83,7 +79,7 @@ class FilmForm extends FormBase {
     foreach ($data['Search'] as $movie)
     {
       //dd($movie);
-      // On pourrait vérifier avant d' ajouter en base?
+      // On pourrait vérifier avant d'ajouter en base?
       $query = \Drupal::entityQuery('node');
       $query->condition('type', 'film');
       // Condtions AND
@@ -98,14 +94,21 @@ class FilmForm extends FormBase {
       if ( sizeof($films_similaires) != 0 )
       {
         //dd($films_similaires);
+
         // Update
         $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-        // On est sûr qu'il n'y a qu'une seule case
-        $node = $node_storage->load( reset($films_similaires) );
 
+        // On est sûr qu'il n'y a qu'une seule case, donc on peut charger la première case du tableau $films_similaires
+
+        // Update du node
+        /*$node = $node_storage->load( reset($films_similaires) );
         $node->title = $movie['Title'];
         $node->field_affiche = $movie['Poster'];
         $node->field_annee_de_sortie = $movie['Year'] . '-01-01';
+        $node->save();*/
+
+        // Warning
+        \Drupal::messenger()->addWarning("Le film " . $movie['Title'] . " existe déjà en base.");
 
       } else {
         // Ajout
@@ -118,18 +121,11 @@ class FilmForm extends FormBase {
           // 'body' => $movie['Plot']
         ]);
 
-        $node->save();// Ajout
-        $node = Node::create([
-          'type'        => 'film',
-          'title'       => $movie['Title'],
-          'field_affiche' => $movie['Poster'],
-          // On avait choisi un champ de type date, on doit renvoyer Y-m-d
-          'field_annee_de_sortie' => $movie['Year'] . '-01-01'
-          // 'body' => $movie['Plot']
-        ]);
-      }
+        $node->save();
 
-      $node->save();
+        // Confirmation
+        \Drupal::messenger()->addMessage("Le film " . $movie['Title'] . " a été ajouté.");
+      }
     }
   }
 
