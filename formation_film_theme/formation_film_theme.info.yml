@@ -1,0 +1,38 @@
+name: Formation Film
+type: theme
+description: 'Un thème de découverte de Drupal avec les films'
+
+package: Formation
+
+core_version_requirement: '^8 || ^9'
+
+
+libraries:
+  - formation_film_theme/style_perso
+
+# Thème parent bartik
+base theme: bartik
+
+
+# La liste des régions disponibles sur ce thème pour placer les blocs
+# On recopie toutes les régions du thème parent
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  highlighted: Highlighted
+  featured_top: 'Featured top'
+  breadcrumb: Breadcrumb
+  content: Content
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  featured_bottom_first: 'Featured bottom first'
+  featured_bottom_second: 'Featured bottom second'
+  featured_bottom_third: 'Featured bottom third'
+  footer_first: 'Footer first'
+  footer_second: 'Footer second'
+  footer_third: 'Footer third'
+  footer_fourth: 'Footer fourth'
+  footer_fifth: 'Footer fifth'
