@@ -4,8 +4,9 @@ description: 'Module contenant les vues applicables au type de contenu film'
 core_version_requirement: '^8 || ^9'
 package: Formation
 dependencies:
-  - content_film
-  - datetime
-  - link
-  - node
-  - user
+  0: content_film
+  1: datetime
+  2: link
+  3: node
+  4: user
+  8: text
